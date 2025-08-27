@@ -12,5 +12,5 @@ OSEDLabHelpers/
 
 OSED study notes,using Vulnserver as a test case.
 - The pattern offset scripts ,can be used to crash the buffer ,then write the pattern to find the exact location of the EIP .
-- <img width="559" height="132" alt="image" src="https://github.com/user-attachments/assets/89991dd7-cd29-4d23-b178-36070f7b336d" />
+ <img width="559" height="132" alt="image" src="https://github.com/user-attachments/assets/89991dd7-cd29-4d23-b178-36070f7b336d" />
 
