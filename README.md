@@ -21,3 +21,5 @@ A series of scripts;
 **Calculates the exact offset to EIP.**
  <img width="559" height="132" alt="image" src="https://github.com/user-attachments/assets/89991dd7-cd29-4d23-b178-36070f7b336d" />
 
+2.Badchar test
+3.Shellcode inject
