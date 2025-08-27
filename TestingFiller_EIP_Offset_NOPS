@@ -1,4 +1,4 @@
-#https://github.com/Steven-Holder/OSED-Study-Notes/edit/OSEDLabHelpers/TestingFiller_EIP_Offset_NOPS
+#https://github.com/Steven-Holder/OSED-Study-Notes/edit/OSEDLabHelpers/Test_EIP_Overwrite
 import socket
 
 # Target details
