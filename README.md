@@ -14,8 +14,12 @@ A series of scripts;
 
 
 2.Test_EIP_Overwrite
+
 3.Adding bad Chars
+
 4.Generating Shellcode with MSFvenom
+
  - msfvenom -p windows/exec CMD=calc.exe -b "\x00" -f python EXITFUNC=thread
  - Copy the code into the shellcode portion of the final script
+   
 5.Final Script
